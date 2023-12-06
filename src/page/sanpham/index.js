@@ -10,17 +10,17 @@ const SanPham = () => {
 
 		<div>
 
-			<div class="card-header">
-				<h3 class="card-title">Danh sách sản phẩm</h3>
-				<div class="card-tools">
-					<a href="?page=sanpham/manage_sanpham" class="btn btn-flat btn-success rounded"><span
-						class="fas fa-plus"></span> Tạo mới</a>
+			<div className="card-header">
+				<h3 className="card-title">Danh sách sản phẩm</h3>
+				<div className="card-tools">
+					<a href="san-pham/them" className="btn btn-flat btn-success rounded"><span
+						className="fas fa-plus"></span> Tạo mới</a>
 				</div>
 			</div>
 			<hr />
 
-			<table id="myTable" class="table table-bordered border-primary">
-				<thead class="thead-dark">
+			<table id="myTable" className="table table-bordered border-primary">
+				<thead className="thead-dark">
 					<tr>
 						<th scope="col">Mã sản phẩm</th>
 						<th scope="col">Chi nhánh</th>
