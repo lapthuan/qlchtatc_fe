@@ -1,26 +1,26 @@
-import ServiceBranch from "../../service/ServiceBranch";
 import ServiceEmployee from "../../service/ServiceEmployee";
+import ServiceAccount from "../../service/ServiceAccount";
 import { Form, Input, Select, Button, Row, Col, message } from "antd";
 import { Link, useParams } from "react-router-dom";
 import useAsync from "../../hook/useAsync";
 import { useEffect } from "react";
 const { Option } = Select;
 
-const ChiTietNhanVien = () => {
+const ChiTietTaiKhoan = () => {
   const { id } = useParams();
   const [form] = Form.useForm();
-  const { data: chinhanh } = useAsync(() => ServiceBranch.getAllBranch());
+  const { data: nhanvien } = useAsync(() => ServiceEmployee.getAllEmployee());
 
   useEffect(() => {
     if (id != "them") {
       (async () => {
-        const res = await ServiceEmployee.getAEmployee(id);
+        const res = await ServiceAccount.getAccount(id);
         if (res) {
           form.setFieldsValue({
+            TenTK: res[0].TenTK,
             MaNhanVien: res[0].MaNhanVien,
-            TenChiNhanh: res[0].TenChiNhanh,
-            MaChiNhanh: res[0].MaChiNhanh,
-            DiaChi: res[0].DiaChi,
+            Matkhau: res[0].Matkhau,
+            Quyen: res[0].Quyen,
           });
         }
       })();
@@ -32,13 +32,13 @@ const ChiTietNhanVien = () => {
   const onFinish = async (values) => {
     if (id != "them") {
       const body = {
+        TenTK: values.TenTK,
         MaNhanVien: values.MaNhanVien,
-        TenNhanVien: values.TenNhanVien,
-        MaChiNhanh: values.MaChiNhanh,
-        DiaChi: values.DiaChi,
+        MatKhau: values.MatKhau,
+        Quyen: values.Quyen,
       };
 
-      const res = await ServiceEmployee.editEmployee(body);
+      const res = await ServiceAccount.editAccount(body);
 
       if (res.message) {
         message.success(
@@ -47,16 +47,18 @@ const ChiTietNhanVien = () => {
       }
     } else {
       const body = {
+        TenTK: values.TenTK,
         MaNhanVien: values.MaNhanVien,
-        TenNhanVien: values.TenNhanVien,
-        MaChiNhanh: values.MaChiNhanh,
-        DiaChi: values.DiaChi,
+        MatKhau: values.MatKhau,
+        Quyen: values.Quyen,
       };
 
-      const res = await ServiceEmployee.createEmployee(body);
+      const res = await ServiceAccount.createAccount(body);
 
       if (res.message == "Đã tồn tại") {
-        message.warning("Mã nhân viên đã tồn tại!");
+        message.warning(
+          "Tài khoản đã tồn tại hoặc nhân viên đã được cấp tài khoản!"
+        );
       } else if (res.message == "Đồng bộ thêm thành công") {
         message.success(
           "Thêm dữ liệu thành công và đồng bộ dữ liệu thành công!"
@@ -69,53 +71,60 @@ const ChiTietNhanVien = () => {
       <div className="card card-outline">
         <div className="card-header">
           <h3 className="card-title">
-            {id != "them" ? "Sửa " : "Thêm "} nhân viên
+            {id != "them" ? "Sửa " : "Thêm "} tài khoản
           </h3>
         </div>
         <div className="card-body">
           <div className="container-fluid">
             <Form form={form} onFinish={onFinish}>
               <Form.Item
-                label="Mã nhân viên"
-                name="MaNhanVien"
+                label="Tài khoản"
+                name="TenTK"
                 rules={[
-                  { required: true, message: "Vui lòng nhập mã nhân viên!" },
+                  { required: true, message: "Vui lòng nhập tài khoản!" },
                 ]}
               >
                 <Input
-                  placeholder="Nhập mã nhân viên"
+                  placeholder="Nhập tài khoản"
                   readOnly={id != "them" ? true : false}
                 />
               </Form.Item>
 
               <Form.Item
-                label="Tên nhân viên"
-                name="TenNhanVien"
-                rules={[
-                  { required: true, message: "Vui lòng nhập tên nhân viên!" },
-                ]}
+                label="Mật khẩu"
+                name="MatKhau"
+                rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
               >
-                <Input placeholder="Nhập tên nhân viên" />
+                <Input placeholder="Nhập mật khẩu" />
               </Form.Item>
 
               <Form.Item
-                label="Địa chỉ"
-                name="DiaChi"
-                rules={[{ required: true, message: "Vui lòng nhập địa chỉ!" }]}
-              >
-                <Input placeholder="Nhập địa chỉ" />
-              </Form.Item>
-              <Form.Item
-                label="Chi nhánh"
-                name="MaChiNhanh"
+                name="Quyen"
+                label="Quyền"
                 rules={[
-                  { required: true, message: "Vui lòng chọn chi nhánh!" },
+                  {
+                    required: true,
+                    message: "Hãy chọn quyền",
+                  },
                 ]}
               >
-                <Select placeholder="Chọn chi nhánh">
-                  {chinhanh.map((item) => (
-                    <Option key={item.MaChiNhanh} value={item.MaChiNhanh}>
-                      {item.TenChiNhanh}
+                <Select placeholder="Chọn quyền">
+                  <Option value="1">Admin</Option>
+                  <Option value="0">User</Option>
+                </Select>
+              </Form.Item>
+
+              <Form.Item
+                label="Nhân viên"
+                name="MaNhanVien"
+                rules={[
+                  { required: true, message: "Vui lòng chọn nhân viên!" },
+                ]}
+              >
+                <Select placeholder="Chọn nhân viên">
+                  {nhanvien.map((item) => (
+                    <Option key={item.MaNhanVien} value={item.MaNhanVien}>
+                      {item.TenNhanVien}
                     </Option>
                   ))}
                 </Select>
@@ -125,7 +134,7 @@ const ChiTietNhanVien = () => {
                 <Button type="primary" htmlType="submit">
                   Lưu
                 </Button>
-                <Link className="btn btn-flat btn-default" to={"/nhan-vien"}>
+                <Link className="btn btn-flat btn-default" to={"/tai-khoan"}>
                   Hủy
                 </Link>
               </div>
@@ -137,4 +146,4 @@ const ChiTietNhanVien = () => {
   );
 };
 
-export default ChiTietNhanVien;
+export default ChiTietTaiKhoan;

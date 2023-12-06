@@ -1,22 +1,28 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import ServiceDeliveryReceipt from "../../service/ServiceDeliveryReceipt";
 import useAsync from "../../hook/useAsync";
-import ServiceThuongHieu from "../../service/ServiceThuongHieu";
 import { Button, message, Modal } from "antd";
 import { useEffect, useState } from "react";
 
-const ThuongHieu = () => {
-  const { data: thuonghieu } = useAsync(() =>
-    ServiceThuongHieu.getAllThuongHieu()
+const ChiTietDatails = () => {
+  const { id } = useParams();
+  const { data: phieunhap } = useAsync(() =>
+    ServiceDeliveryReceipt.getDeliveryReceiptDetail(id)
   );
 
   const [open, setOpen] = useState(false);
-  const [id, setId] = useState();
-  const showModal = (ids) => {
+  const [MaPN, setMaPN] = useState();
+  const [MaSP, setMaSP] = useState();
+  const showModal = (ids, masp) => {
     setOpen(true);
-    setId(ids);
+    setMaPN(ids);
+    setMaSP(masp);
   };
   const handleOk = async () => {
-    const res = await ServiceThuongHieu.deleteThuongHieu(id);
+    const res = await ServiceDeliveryReceipt.deleteDeliveryReceiptDetail(
+      MaPN,
+      MaSP
+    );
     if (res.message == "Đồng bộ xóa thành công!") {
       message.success("Xóa dữ liệu thành công");
       setOpen(false);
@@ -44,10 +50,10 @@ const ThuongHieu = () => {
           Chắc chắn xóa dữ liệu này
         </Modal>
         <div className="card-header">
-          <h3 className="card-title">Danh sách thương hiệu</h3>
+          <h3 className="card-title">Danh sách chi tiết phiếu nhập</h3>
           <div className="card-tools">
             <Link
-              to="/thuong-hieu/them"
+              to={`/phieu-nhap-chi-tiet/action?MaPhieuNhap=${id}`}
               className="btn btn-flat btn-success rounded"
             >
               <span className="fas fa-plus"></span> Tạo mới
@@ -59,27 +65,41 @@ const ThuongHieu = () => {
         <table id="myTable" className="table table-bordered border-primary">
           <thead className="thead-dark">
             <tr>
-              <th scope="col">Mã thương hiệu</th>
-              <th scope="col">Tên thương hiệu</th>
+              <th scope="col">Mã phiếu nhập</th>
+              <th scope="col">Tên sản phẩm</th>
+              <th scope="col">Số lượng</th>
+              <th scope="col">Đơn giá</th>
+              <th scope="col">Tổng tiền</th>
+              <th scope="col">Nhà cung cấp</th>
+              <th scope="col">Tên chi nhánh</th>
+              <th scope="col">Ngày nhập</th>
               <th scope="col">Chức năng</th>
             </tr>
           </thead>
           <tbody>
-            {thuonghieu?.map((thuonghieus) => (
-              <tr key={thuonghieus.MaThuongHieu}>
-                <td>{thuonghieus.MaThuongHieu}</td>
-                <td>{thuonghieus.TenThuongHieu}</td>
+            {phieunhap?.map((phieunhaps) => (
+              <tr key={phieunhaps.MaPhieuNhap}>
+                <td>{phieunhaps.MaPhieuNhap}</td>
+                <td>{phieunhaps.TenSanPham}</td>
+                <td>{phieunhaps.SoLuong}</td>
+                <td>{phieunhaps.DonGia}</td>
+                <td>{phieunhaps.TongTien}</td>
+                <td>{phieunhaps.TenNhaCungCap}</td>
+                <td>{phieunhaps.TenChiNhanh}</td>
+                <td>{phieunhaps.NgayNhap}</td>
                 <td>
                   <div className="d-flex">
                     <Link
                       className="btn btn-success"
-                      to={`/thuong-hieu/${thuonghieus.MaThuongHieu}`}
+                      to={`/phieu-nhap-chi-tiet/action?MaPhieuNhap=${phieunhaps.MaPhieuNhap}&&MaSanPham=${phieunhaps.MaSanPham}`}
                     >
                       Sửa
                     </Link>
                     <button
                       className="btn btn-danger delete_data"
-                      onClick={() => showModal(thuonghieus.MaThuongHieu)}
+                      onClick={() =>
+                        showModal(phieunhaps.MaPhieuNhap, phieunhaps.MaSanPham)
+                      }
                     >
                       Xóa
                     </button>
@@ -94,4 +114,4 @@ const ThuongHieu = () => {
   );
 };
 
-export default ThuongHieu;
+export default ChiTietDatails;

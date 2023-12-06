@@ -1,26 +1,42 @@
 import ServiceBranch from "../../service/ServiceBranch";
 import ServiceEmployee from "../../service/ServiceEmployee";
-import { Form, Input, Select, Button, Row, Col, message } from "antd";
+import ServiceCustomer from "../../service/ServiceCustomer";
+import ServiceOrder from "../../service/ServiceOrder";
+import {
+  Form,
+  Input,
+  Select,
+  Button,
+  Row,
+  Col,
+  message,
+  DatePicker,
+} from "antd";
 import { Link, useParams } from "react-router-dom";
 import useAsync from "../../hook/useAsync";
 import { useEffect } from "react";
+import dayjs from "dayjs";
 const { Option } = Select;
 
-const ChiTietNhanVien = () => {
+const ChiTietHoaDon = () => {
   const { id } = useParams();
   const [form] = Form.useForm();
   const { data: chinhanh } = useAsync(() => ServiceBranch.getAllBranch());
+  const { data: nhanvien } = useAsync(() => ServiceEmployee.getAllEmployee());
+  const { data: khachhang } = useAsync(() => ServiceCustomer.getAllCustomer());
 
   useEffect(() => {
     if (id != "them") {
       (async () => {
-        const res = await ServiceEmployee.getAEmployee(id);
+        const res = await ServiceOrder.getOrder(id);
         if (res) {
+          const ngay = dayjs(res[0].NgayLap, "YYYY-MM-DD");
           form.setFieldsValue({
+            MaHoaDon: res[0].MaHoaDon,
+            MaKhachHang: res[0].MaKhachHang,
             MaNhanVien: res[0].MaNhanVien,
-            TenChiNhanh: res[0].TenChiNhanh,
             MaChiNhanh: res[0].MaChiNhanh,
-            DiaChi: res[0].DiaChi,
+            NgayLap: ngay,
           });
         }
       })();
@@ -31,14 +47,17 @@ const ChiTietNhanVien = () => {
 
   const onFinish = async (values) => {
     if (id != "them") {
+      const ngay = dayjs(values.NgayLap).format("YYYY-MM-DD");
+
       const body = {
+        MaHoaDon: values.MaHoaDon,
+        MaKhachHang: values.MaKhachHang,
         MaNhanVien: values.MaNhanVien,
-        TenNhanVien: values.TenNhanVien,
         MaChiNhanh: values.MaChiNhanh,
-        DiaChi: values.DiaChi,
+        NgayLap: ngay,
       };
 
-      const res = await ServiceEmployee.editEmployee(body);
+      const res = await ServiceOrder.editOrder(body);
 
       if (res.message) {
         message.success(
@@ -46,17 +65,20 @@ const ChiTietNhanVien = () => {
         );
       }
     } else {
+      const ngay = dayjs(values.NgayLap).format("YYYY-MM-DD");
+
       const body = {
+        MaHoaDon: values.MaHoaDon,
+        MaKhachHang: values.MaKhachHang,
         MaNhanVien: values.MaNhanVien,
-        TenNhanVien: values.TenNhanVien,
         MaChiNhanh: values.MaChiNhanh,
-        DiaChi: values.DiaChi,
+        NgayLap: ngay,
       };
 
-      const res = await ServiceEmployee.createEmployee(body);
+      const res = await ServiceOrder.createOrder(body);
 
       if (res.message == "Đã tồn tại") {
-        message.warning("Mã nhân viên đã tồn tại!");
+        message.warning("Mã hóa đơn đã tồn tại!");
       } else if (res.message == "Đồng bộ thêm thành công") {
         message.success(
           "Thêm dữ liệu thành công và đồng bộ dữ liệu thành công!"
@@ -64,6 +86,7 @@ const ChiTietNhanVien = () => {
       }
     }
   };
+
   return (
     <>
       <div className="card card-outline">
@@ -76,35 +99,46 @@ const ChiTietNhanVien = () => {
           <div className="container-fluid">
             <Form form={form} onFinish={onFinish}>
               <Form.Item
-                label="Mã nhân viên"
-                name="MaNhanVien"
+                label="Mã hóa đơn"
+                name="MaHoaDon"
                 rules={[
-                  { required: true, message: "Vui lòng nhập mã nhân viên!" },
+                  { required: true, message: "Vui lòng nhập mã hóa đơn!" },
                 ]}
               >
                 <Input
-                  placeholder="Nhập mã nhân viên"
+                  placeholder="Nhập mã hóa đơn"
                   readOnly={id != "them" ? true : false}
                 />
               </Form.Item>
 
               <Form.Item
-                label="Tên nhân viên"
-                name="TenNhanVien"
-                rules={[
-                  { required: true, message: "Vui lòng nhập tên nhân viên!" },
-                ]}
+                label="Khách hàng"
+                name="MaKhachHang"
+                rules={[{ required: true, message: "Chọn khách hàng!" }]}
               >
-                <Input placeholder="Nhập tên nhân viên" />
+                <Select placeholder="Chọn khách hàng">
+                  {khachhang.map((item) => (
+                    <Option key={item.MaKhachHang} value={item.MaKhachHang}>
+                      {item.TenKhachHang}
+                    </Option>
+                  ))}
+                </Select>
               </Form.Item>
 
               <Form.Item
-                label="Địa chỉ"
-                name="DiaChi"
-                rules={[{ required: true, message: "Vui lòng nhập địa chỉ!" }]}
+                label="Nhân viên"
+                name="MaNhanVien"
+                rules={[{ required: true, message: "Chọn nhân viên!" }]}
               >
-                <Input placeholder="Nhập địa chỉ" />
+                <Select placeholder="Chọn nhân viên">
+                  {nhanvien.map((item) => (
+                    <Option key={item.MaNhanVien} value={item.MaNhanVien}>
+                      {item.TenNhanVien}
+                    </Option>
+                  ))}
+                </Select>
               </Form.Item>
+
               <Form.Item
                 label="Chi nhánh"
                 name="MaChiNhanh"
@@ -121,11 +155,28 @@ const ChiTietNhanVien = () => {
                 </Select>
               </Form.Item>
 
+              <Form.Item
+                name="NgayLap"
+                label="Ngày lập hóa đơn"
+                rules={[
+                  {
+                    required: true,
+                    message: "Hãy chọn ngày lập hóa đơn",
+                  },
+                ]}
+              >
+                <DatePicker
+                  style={{ width: "100%" }}
+                  format="DD-MM-YYYY"
+                  placeholder="Chọn ngày lập hóa đơn"
+                />
+              </Form.Item>
+
               <div className="card-footer">
                 <Button type="primary" htmlType="submit">
                   Lưu
                 </Button>
-                <Link className="btn btn-flat btn-default" to={"/nhan-vien"}>
+                <Link className="btn btn-flat btn-default" to={"/hoa-don"}>
                   Hủy
                 </Link>
               </div>
@@ -137,4 +188,4 @@ const ChiTietNhanVien = () => {
   );
 };
 
-export default ChiTietNhanVien;
+export default ChiTietHoaDon;

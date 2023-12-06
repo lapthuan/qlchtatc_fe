@@ -1,23 +1,22 @@
-import ServiceNhaCungCap from "../../service/ServiceNhaCungCap";
+import ServiceLoaiKhachHang from "../../service/ServiceLoaiKhachHang";
 import { Form, Input, Select, Button, Row, Col, message } from "antd";
 import { Link, useParams } from "react-router-dom";
 import useAsync from "../../hook/useAsync";
 import { useEffect } from "react";
 const { Option } = Select;
 
-const ChiTietNhaCungCap = () => {
+const ChiTietLKH = () => {
   const { id } = useParams();
   const [form] = Form.useForm();
 
   useEffect(() => {
     if (id != "them") {
       (async () => {
-        const res = await ServiceNhaCungCap.getNhaCungCap(id);
+        const res = await ServiceLoaiKhachHang.getACustomerCategory(id);
         if (res) {
           form.setFieldsValue({
-            MaNhaCungCap: res[0].MaNhaCungCap,
-            TenNhaCungCap: res[0].TenNhaCungCap,
-            DiaChi: res[0].DiaChi,
+            MaLoaiKhachHang: res[0].MaLoaiKhachHang,
+            TenLoaiKhachHang: res[0].TenLoaiKhachHang,
           });
         }
       })();
@@ -29,12 +28,11 @@ const ChiTietNhaCungCap = () => {
   const onFinish = async (values) => {
     if (id != "them") {
       const body = {
-        MaNhaCungCap: values.MaNhaCungCap,
-        TenNhaCungCap: values.TenNhaCungCap,
-        DiaChi: values.DiaChi,
+        MaLoaiKhachHang: values.MaLoaiKhachHang,
+        TenLoaiKhachHang: values.TenLoaiKhachHang,
       };
 
-      const res = await ServiceNhaCungCap.editNhaCungCap(body);
+      const res = await ServiceLoaiKhachHang.editCustomerCategory(body);
 
       if (res.message) {
         message.success(
@@ -43,15 +41,14 @@ const ChiTietNhaCungCap = () => {
       }
     } else {
       const body = {
-        MaNhaCungCap: values.MaNhaCungCap,
-        TenNhaCungCap: values.TenNhaCungCap,
-        DiaChi: values.DiaChi,
+        MaLoaiKhachHang: values.MaLoaiKhachHang,
+        TenLoaiKhachHang: values.TenLoaiKhachHang,
       };
 
-      const res = await ServiceNhaCungCap.createNhaCungCap(body);
+      const res = await ServiceLoaiKhachHang.createCustomerCategory(body);
 
       if (res.message == "Đã tồn tại") {
-        message.warning("Nhà cung cấp đã tồn tại!");
+        message.warning("Loại khách hàng đã tồn tại!");
       } else if (res.message == "Đồng bộ thêm thành công") {
         message.success(
           "Thêm dữ liệu thành công và đồng bộ dữ liệu thành công!"
@@ -64,56 +61,49 @@ const ChiTietNhaCungCap = () => {
       <div className="card card-outline">
         <div className="card-header">
           <h3 className="card-title">
-            {id != "them" ? "Sửa " : "Thêm "} nhà cung cấp
+            {id != "them" ? "Sửa " : "Thêm "} loại khách hàng
           </h3>
         </div>
         <div className="card-body">
           <div className="container-fluid">
             <Form form={form} onFinish={onFinish}>
               <Form.Item
-                label="Mã nhà cung cấp"
-                name="MaNhaCungCap"
+                label="Mã loại khách hàng"
+                name="MaLoaiKhachHang"
                 rules={[
-                  { required: true, message: "Vui lòng nhập mã nhà cung cấp!" },
+                  {
+                    required: true,
+                    message: "Vui lòng nhập mã loại khách hàng!",
+                  },
                 ]}
               >
                 <Input
-                  placeholder="Nhập nhà cung cấp"
+                  placeholder="Nhập loại khách hàng"
                   readOnly={id != "them" ? true : false}
                 />
               </Form.Item>
 
               <Form.Item
-                label="Tên nhà cung cấp"
-                name="TenNhaCungCap"
+                label="Tên loại khách hàng"
+                name="TenLoaiKhachHang"
                 rules={[
                   {
                     required: true,
-                    message: "Vui lòng nhập tên nhà cung cấp!",
+                    message: "Vui lòng nhập tên loại khách hàng!",
                   },
                 ]}
               >
-                <Input placeholder="Nhập tên nhà cung cấp" />
-              </Form.Item>
-
-              <Form.Item
-                label="Địa chỉ"
-                name="DiaChi"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng nhập địa chỉ nhà cung cấp!",
-                  },
-                ]}
-              >
-                <Input placeholder="Địa chỉ nhà cung cấp" />
+                <Input placeholder="Nhập tên loại khách hàng" />
               </Form.Item>
 
               <div className="card-footer">
                 <Button type="primary" htmlType="submit">
                   Lưu
                 </Button>
-                <Link className="btn btn-flat btn-default" to={"/nha-cung-cap"}>
+                <Link
+                  className="btn btn-flat btn-default"
+                  to={"/loai-khach-hang"}
+                >
                   Hủy
                 </Link>
               </div>
@@ -125,4 +115,4 @@ const ChiTietNhaCungCap = () => {
   );
 };
 
-export default ChiTietNhaCungCap;
+export default ChiTietLKH;

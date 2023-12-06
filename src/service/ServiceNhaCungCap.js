@@ -11,7 +11,7 @@ const ServiceNhaCungCap = {
     return requests.post(`/nhacungcap`, body);
   },
   editNhaCungCap: async (body, id) => {
-    return requests.put(`/nhacungcap/${id}`, body);
+    return requests.put(`/nhacungcap`, body);
   },
   deleteNhaCungCap: async (id) => {
     return requests.delete(`/nhacungcap/${id}`);
