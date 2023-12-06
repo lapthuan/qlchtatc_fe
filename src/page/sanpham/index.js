@@ -33,7 +33,7 @@ const SanPham = () => {
 					</tr>
 				</thead>
 				<tbody>
-
+					
 					{sanpham?.map((product) => (
 						<tr key={product.MaSanPham}>
 							<td>{product.MaSanPham}</td>

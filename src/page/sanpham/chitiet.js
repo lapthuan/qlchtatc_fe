@@ -1,8 +1,16 @@
 import { useParams } from "react-router-dom";
+import useAsync from "../../hook/useAsync";
+import ServiceBranch from "../../service/ServiceBranch";
+import ServiceDanhMuc from "../../service/ServiceDanhMuc";
+import ServiceThuongHieu from "../../service/ServiceThuongHieu";
 
 
 const SanPhamChiTiet = () => {
 	const { id } = useParams()
+	const { data: danhmuc } = useAsync(() => ServiceDanhMuc.getAllDanhMuc())
+	const { data: thuonghieu } = useAsync(() => ServiceThuongHieu.getAllThuongHieu())
+	const { data: chinhanh } = useAsync(() => ServiceBranch.getAllBranch())
+
 
 	return (
 		<>
@@ -35,6 +43,7 @@ const SanPhamChiTiet = () => {
 								<select name="madanhmuc" id="madanhmuc" className="custom-select select">
 
 									<option>
+
 									</option>
 
 								</select>
