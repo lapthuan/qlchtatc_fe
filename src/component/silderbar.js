@@ -1,17 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../context/ContextProvider";
+import { Cookies } from "react-cookie";
 
 const Sidebar = () => {
   const { isFlipped } = useStateContext();
+  const cookies = new Cookies();
+
+  const userInfo = cookies.get("userinfo");
 
   return (
     <div className={`sidebar left ${isFlipped ? "fliph" : ""}`}>
       <div className="user-panel">
         <div className="info">
-          <p>bootstrap develop</p>
+          <p>{Array.isArray(userInfo) ? userInfo[0]?.TenNhanVien : ""}</p>
           <a href="#">
             <i className="fa fa-circle text-success"></i> Online
+          </a>
+          <a href="#">
+            <i class="fa fa-user text-danger"></i>{" "}
+            {Array.isArray(userInfo) && userInfo[0]?.Quyen == 1
+              ? "Admin"
+              : "Nhân viên"}
           </a>
         </div>
       </div>
@@ -57,36 +67,40 @@ const Sidebar = () => {
             </li>
           </ul>
         </li>
-        <li>
-          <a
-            href="#"
-            data-toggle="collapse"
-            data-target="#tables"
-            className={`collapsed ${isFlipped ? "active" : ""}`}
-          >
-            <i className="fa fa-table"></i>
-            <span className="nav-label">Quản trị</span>
-            <span className="fa fa-chevron-left pull-right"></span>
-          </a>
-          <ul className="sub-menu collapse" id="tables">
-            <li>
-              <Link to="/nhan-vien">Nhân viên</Link>
-            </li>
-            <li>
-              <Link to="/tai-khoan">Tài khoản</Link>
-            </li>
-            <li>
-              <Link to="/chi-nhanh">Chi nhánh</Link>
-            </li>
-            <li>
-              <Link to="/tinh">Tỉnh</Link>
-            </li>
+        {Array.isArray(userInfo) && userInfo[0]?.Quyen == 1 ? (
+          <li>
+            <a
+              href="#"
+              data-toggle="collapse"
+              data-target="#tables"
+              className={`collapsed ${isFlipped ? "active" : ""}`}
+            >
+              <i className="fa fa-table"></i>
+              <span className="nav-label">Quản trị</span>
+              <span className="fa fa-chevron-left pull-right"></span>
+            </a>
+            <ul className="sub-menu collapse" id="tables">
+              <li>
+                <Link to="/nhan-vien">Nhân viên</Link>
+              </li>
+              <li>
+                <Link to="/tai-khoan">Tài khoản</Link>
+              </li>
+              <li>
+                <Link to="/chi-nhanh">Chi nhánh</Link>
+              </li>
+              <li>
+                <Link to="/tinh">Tỉnh</Link>
+              </li>
 
-            <li>
-              <Link to="/phan-tan">Phân tán</Link>
-            </li>
-          </ul>
-        </li>
+              <li>
+                <Link to="/phan-tan">Phân tán</Link>
+              </li>
+            </ul>
+          </li>
+        ) : (
+          <></>
+        )}
       </ul>
     </div>
   );
