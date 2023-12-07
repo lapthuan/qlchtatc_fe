@@ -66,7 +66,7 @@ const SanPham = () => {
             </tr>
           </thead>
           <tbody>
-            {sanpham?.map((product) => (
+            {Array.isArray(sanpham) && sanpham?.map((product) => (
               <tr key={product.MaSanPham}>
                 <td>{product.MaSanPham}</td>
                 <td>{product.TenChiNhanh}</td>

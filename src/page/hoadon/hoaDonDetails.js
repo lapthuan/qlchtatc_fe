@@ -73,37 +73,38 @@ const HoaDonDeTail = () => {
             </tr>
           </thead>
           <tbody>
-            {hoadon?.map((hoadons) => (
-              <tr key={hoadons.MaHoaDon}>
-                <td>{hoadons.MaHoaDon}</td>
-                <td>{hoadons.TenKhachHang}</td>
-                <td>{hoadons.TenSanPham}</td>
-                <td>{hoadons.GiaSanPham}</td>
-                <td>{hoadons.SoLuong}</td>
-                <td>{hoadons.ThanhTien}</td>
-                <td>{hoadons.TenNhanVien}</td>
-                <td>{hoadons.TenChiNhanh}</td>
-                <td>{hoadons.NgayLap}</td>
-                <td>
-                  <div className="d-flex">
-                    <Link
-                      className="btn btn-success"
-                      to={`/hoa-don-detail/action?MaPhieuNhap=${hoadons.MaHoaDon}&&MaSanPham=${hoadons.MaSanPham}`}
-                    >
-                      Sửa
-                    </Link>
-                    <button
-                      className="btn btn-danger delete_data"
-                      onClick={() =>
-                        showModal(hoadons.MaHoaDon, hoadons.MaSanPham)
-                      }
-                    >
-                      Xóa
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {Array.isArray(hoadon) &&
+              hoadon?.map((hoadons) => (
+                <tr key={hoadons.MaHoaDon}>
+                  <td>{hoadons.MaHoaDon}</td>
+                  <td>{hoadons.TenKhachHang}</td>
+                  <td>{hoadons.TenSanPham}</td>
+                  <td>{hoadons.GiaSanPham}</td>
+                  <td>{hoadons.SoLuong}</td>
+                  <td>{hoadons.ThanhTien}</td>
+                  <td>{hoadons.TenNhanVien}</td>
+                  <td>{hoadons.TenChiNhanh}</td>
+                  <td>{hoadons.NgayLap}</td>
+                  <td>
+                    <div className="d-flex">
+                      <Link
+                        className="btn btn-success"
+                        to={`/hoa-don-detail/action?MaPhieuNhap=${hoadons.MaHoaDon}&&MaSanPham=${hoadons.MaSanPham}`}
+                      >
+                        Sửa
+                      </Link>
+                      <button
+                        className="btn btn-danger delete_data"
+                        onClick={() =>
+                          showModal(hoadons.MaHoaDon, hoadons.MaSanPham)
+                        }
+                      >
+                        Xóa
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

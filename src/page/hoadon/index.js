@@ -67,7 +67,7 @@ const HoaDon = () => {
             </tr>
           </thead>
           <tbody>
-            {order?.map((orders) => (
+            {Array.isArray(order) && order?.map((orders) => (
               <tr key={orders.MaHoaDon}>
                 <td>{orders.MaHoaDon}</td>
                 <td>{orders.TenKhachHang}</td>

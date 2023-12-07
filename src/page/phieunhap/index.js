@@ -69,7 +69,7 @@ const PhieuNhap = () => {
             </tr>
           </thead>
           <tbody>
-            {phieunhap?.map((phieunhaps) => (
+            {Array.isArray(phieunhap) && phieunhap?.map((phieunhaps) => (
               <tr key={phieunhaps.MaPhieuNhap}>
                 <td>{phieunhaps.MaPhieuNhap}</td>
                 <td>{phieunhaps.TenNhaCungCap}</td>

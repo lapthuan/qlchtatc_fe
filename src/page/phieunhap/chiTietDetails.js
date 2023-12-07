@@ -77,36 +77,40 @@ const ChiTietDatails = () => {
             </tr>
           </thead>
           <tbody>
-            {phieunhap?.map((phieunhaps) => (
-              <tr key={phieunhaps.MaPhieuNhap}>
-                <td>{phieunhaps.MaPhieuNhap}</td>
-                <td>{phieunhaps.TenSanPham}</td>
-                <td>{phieunhaps.SoLuong}</td>
-                <td>{phieunhaps.DonGia}</td>
-                <td>{phieunhaps.TongTien}</td>
-                <td>{phieunhaps.TenNhaCungCap}</td>
-                <td>{phieunhaps.TenChiNhanh}</td>
-                <td>{phieunhaps.NgayNhap}</td>
-                <td>
-                  <div className="d-flex">
-                    <Link
-                      className="btn btn-success"
-                      to={`/phieu-nhap-chi-tiet/action?MaPhieuNhap=${phieunhaps.MaPhieuNhap}&&MaSanPham=${phieunhaps.MaSanPham}`}
-                    >
-                      Sửa
-                    </Link>
-                    <button
-                      className="btn btn-danger delete_data"
-                      onClick={() =>
-                        showModal(phieunhaps.MaPhieuNhap, phieunhaps.MaSanPham)
-                      }
-                    >
-                      Xóa
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {Array.isArray(phieunhap) &&
+              phieunhap?.map((phieunhaps) => (
+                <tr key={phieunhaps.MaPhieuNhap}>
+                  <td>{phieunhaps.MaPhieuNhap}</td>
+                  <td>{phieunhaps.TenSanPham}</td>
+                  <td>{phieunhaps.SoLuong}</td>
+                  <td>{phieunhaps.DonGia}</td>
+                  <td>{phieunhaps.TongTien}</td>
+                  <td>{phieunhaps.TenNhaCungCap}</td>
+                  <td>{phieunhaps.TenChiNhanh}</td>
+                  <td>{phieunhaps.NgayNhap}</td>
+                  <td>
+                    <div className="d-flex">
+                      <Link
+                        className="btn btn-success"
+                        to={`/phieu-nhap-chi-tiet/action?MaPhieuNhap=${phieunhaps.MaPhieuNhap}&&MaSanPham=${phieunhaps.MaSanPham}`}
+                      >
+                        Sửa
+                      </Link>
+                      <button
+                        className="btn btn-danger delete_data"
+                        onClick={() =>
+                          showModal(
+                            phieunhaps.MaPhieuNhap,
+                            phieunhaps.MaSanPham
+                          )
+                        }
+                      >
+                        Xóa
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

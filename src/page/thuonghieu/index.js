@@ -65,7 +65,7 @@ const ThuongHieu = () => {
             </tr>
           </thead>
           <tbody>
-            {thuonghieu?.map((thuonghieus) => (
+            {Array.isArray(thuonghieu) && thuonghieu?.map((thuonghieus) => (
               <tr key={thuonghieus.MaThuongHieu}>
                 <td>{thuonghieus.MaThuongHieu}</td>
                 <td>{thuonghieus.TenThuongHieu}</td>

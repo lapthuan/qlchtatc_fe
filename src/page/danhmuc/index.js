@@ -62,28 +62,29 @@ const DanhMuc = () => {
             </tr>
           </thead>
           <tbody>
-            {danhmuc?.map((danhmucs) => (
-              <tr key={danhmucs.MaDanhMuc}>
-                <td>{danhmucs.MaDanhMuc}</td>
-                <td>{danhmucs.TenDanhMuc}</td>
-                <td>
-                  <div className="d-flex">
-                    <Link
-                      className="btn btn-success"
-                      to={`/danh-muc/${danhmucs.MaDanhMuc}`}
-                    >
-                      Sửa
-                    </Link>
-                    <button
-                      className="btn btn-danger delete_data"
-                      onClick={() => showModal(danhmucs.MaDanhMuc)}
-                    >
-                      Xóa
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {Array.isArray(danhmuc) &&
+              danhmuc?.map((danhmucs) => (
+                <tr key={danhmucs.MaDanhMuc}>
+                  <td>{danhmucs.MaDanhMuc}</td>
+                  <td>{danhmucs.TenDanhMuc}</td>
+                  <td>
+                    <div className="d-flex">
+                      <Link
+                        className="btn btn-success"
+                        to={`/danh-muc/${danhmucs.MaDanhMuc}`}
+                      >
+                        Sửa
+                      </Link>
+                      <button
+                        className="btn btn-danger delete_data"
+                        onClick={() => showModal(danhmucs.MaDanhMuc)}
+                      >
+                        Xóa
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

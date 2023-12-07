@@ -64,28 +64,32 @@ const Kho = () => {
             </tr>
           </thead>
           <tbody>
-            {kho?.map((khos) => (
-              <tr key={khos.MaKho}>
-                <td>{khos.MaKho}</td>
-                <td>{khos.TenKho}</td>
-                <td>{khos.TenChiNhanh}</td>
-                <td>{khos.TenSanPham}</td>
-                <td>{khos.SoLuong}</td>
-                <td>
-                  <div className="d-flex">
-                    <Link className="btn btn-success" to={`/kho/${khos.MaKho}`}>
-                      Sửa
-                    </Link>
-                    <button
-                      className="btn btn-danger delete_data"
-                      onClick={() => showModal(khos.MaKho)}
-                    >
-                      Xóa
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {Array.isArray(kho) &&
+              kho?.map((khos) => (
+                <tr key={khos.MaKho}>
+                  <td>{khos.MaKho}</td>
+                  <td>{khos.TenKho}</td>
+                  <td>{khos.TenChiNhanh}</td>
+                  <td>{khos.TenSanPham}</td>
+                  <td>{khos.SoLuong}</td>
+                  <td>
+                    <div className="d-flex">
+                      <Link
+                        className="btn btn-success"
+                        to={`/kho/${khos.MaKho}`}
+                      >
+                        Sửa
+                      </Link>
+                      <button
+                        className="btn btn-danger delete_data"
+                        onClick={() => showModal(khos.MaKho)}
+                      >
+                        Xóa
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

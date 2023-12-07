@@ -64,30 +64,31 @@ const KhachHang = () => {
             </tr>
           </thead>
           <tbody>
-            {khachhang?.map((khachhangs) => (
-              <tr key={khachhangs.MaKhachHang}>
-                <td>{khachhangs.MaKhachHang}</td>
-                <td>{khachhangs.TenKhachHang}</td>
-                <td>{khachhangs.DiaChi}</td>
-                <td>{khachhangs.TenLoaiKhachHang}</td>
-                <td>
-                  <div className="d-flex">
-                    <Link
-                      className="btn btn-success"
-                      to={`/khach-hang/${khachhangs.MaKhachHang}`}
-                    >
-                      Sửa
-                    </Link>
-                    <button
-                      className="btn btn-danger delete_data"
-                      onClick={() => showModal(khachhangs.MaKhachHang)}
-                    >
-                      Xóa
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {Array.isArray(khachhang) &&
+              khachhang?.map((khachhangs) => (
+                <tr key={khachhangs.MaKhachHang}>
+                  <td>{khachhangs.MaKhachHang}</td>
+                  <td>{khachhangs.TenKhachHang}</td>
+                  <td>{khachhangs.DiaChi}</td>
+                  <td>{khachhangs.TenLoaiKhachHang}</td>
+                  <td>
+                    <div className="d-flex">
+                      <Link
+                        className="btn btn-success"
+                        to={`/khach-hang/${khachhangs.MaKhachHang}`}
+                      >
+                        Sửa
+                      </Link>
+                      <button
+                        className="btn btn-danger delete_data"
+                        onClick={() => showModal(khachhangs.MaKhachHang)}
+                      >
+                        Xóa
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

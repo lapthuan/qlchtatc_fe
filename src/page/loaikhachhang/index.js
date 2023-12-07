@@ -66,28 +66,31 @@ const LoaiKhachHang = () => {
             </tr>
           </thead>
           <tbody>
-            {loaikhachhang?.map((loaikhachhangs) => (
-              <tr key={loaikhachhangs.MaLoaiKhachHang}>
-                <td>{loaikhachhangs.MaLoaiKhachHang}</td>
-                <td>{loaikhachhangs.TenLoaiKhachHang}</td>
-                <td>
-                  <div className="d-flex">
-                    <Link
-                      className="btn btn-success"
-                      to={`/loai-khach-hang/${loaikhachhangs.MaLoaiKhachHang}`}
-                    >
-                      Sửa
-                    </Link>
-                    <button
-                      className="btn btn-danger delete_data"
-                      onClick={() => showModal(loaikhachhangs.MaLoaiKhachHang)}
-                    >
-                      Xóa
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {Array.isArray(loaikhachhang) &&
+              loaikhachhang?.map((loaikhachhangs) => (
+                <tr key={loaikhachhangs.MaLoaiKhachHang}>
+                  <td>{loaikhachhangs.MaLoaiKhachHang}</td>
+                  <td>{loaikhachhangs.TenLoaiKhachHang}</td>
+                  <td>
+                    <div className="d-flex">
+                      <Link
+                        className="btn btn-success"
+                        to={`/loai-khach-hang/${loaikhachhangs.MaLoaiKhachHang}`}
+                      >
+                        Sửa
+                      </Link>
+                      <button
+                        className="btn btn-danger delete_data"
+                        onClick={() =>
+                          showModal(loaikhachhangs.MaLoaiKhachHang)
+                        }
+                      >
+                        Xóa
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

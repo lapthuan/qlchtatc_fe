@@ -64,30 +64,31 @@ const TaiKhoan = () => {
             </tr>
           </thead>
           <tbody>
-            {account?.map((accounts) => (
-              <tr key={accounts.TenTK}>
-                <td>{accounts.TenTK}</td>
-                <td>{accounts.TenNhanVien}</td>
-                <td>{accounts.Matkhau}</td>
-                <td>{accounts.Quyen}</td>
-                <td>
-                  <div className="d-flex">
-                    <Link
-                      className="btn btn-success"
-                      to={`/tai-khoan/${accounts.TenTK}`}
-                    >
-                      Sửa
-                    </Link>
-                    <button
-                      className="btn btn-danger delete_data"
-                      onClick={() => showModal(accounts.TenTK)}
-                    >
-                      Xóa
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {Array.isArray(account) &&
+              account?.map((accounts) => (
+                <tr key={accounts.TenTK}>
+                  <td>{accounts.TenTK}</td>
+                  <td>{accounts.TenNhanVien}</td>
+                  <td>{accounts.Matkhau}</td>
+                  <td>{accounts.Quyen}</td>
+                  <td>
+                    <div className="d-flex">
+                      <Link
+                        className="btn btn-success"
+                        to={`/tai-khoan/${accounts.TenTK}`}
+                      >
+                        Sửa
+                      </Link>
+                      <button
+                        className="btn btn-danger delete_data"
+                        onClick={() => showModal(accounts.TenTK)}
+                      >
+                        Xóa
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

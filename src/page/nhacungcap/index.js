@@ -66,29 +66,30 @@ const NhaCungCap = () => {
             </tr>
           </thead>
           <tbody>
-            {nhacungcap?.map((nhacungcaps) => (
-              <tr key={nhacungcaps.MaNhaCungCap}>
-                <td>{nhacungcaps.MaNhaCungCap}</td>
-                <td>{nhacungcaps.TenNhaCungCap}</td>
-                <td>{nhacungcaps.DiaChi}</td>
-                <td>
-                  <div className="d-flex">
-                    <Link
-                      className="btn btn-success"
-                      to={`/nha-cung-cap/${nhacungcaps.MaNhaCungCap}`}
-                    >
-                      Sửa
-                    </Link>
-                    <button
-                      className="btn btn-danger delete_data"
-                      onClick={() => showModal(nhacungcaps.MaNhaCungCap)}
-                    >
-                      Xóa
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {Array.isArray(nhacungcap) &&
+              nhacungcap?.map((nhacungcaps) => (
+                <tr key={nhacungcaps.MaNhaCungCap}>
+                  <td>{nhacungcaps.MaNhaCungCap}</td>
+                  <td>{nhacungcaps.TenNhaCungCap}</td>
+                  <td>{nhacungcaps.DiaChi}</td>
+                  <td>
+                    <div className="d-flex">
+                      <Link
+                        className="btn btn-success"
+                        to={`/nha-cung-cap/${nhacungcaps.MaNhaCungCap}`}
+                      >
+                        Sửa
+                      </Link>
+                      <button
+                        className="btn btn-danger delete_data"
+                        onClick={() => showModal(nhacungcaps.MaNhaCungCap)}
+                      >
+                        Xóa
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

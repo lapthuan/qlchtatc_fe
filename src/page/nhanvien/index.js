@@ -65,30 +65,31 @@ const NhanVien = () => {
             </tr>
           </thead>
           <tbody>
-            {nhanvien?.map((nhanviens) => (
-              <tr key={nhanviens.MaNhanVien}>
-                <td>{nhanviens.MaNhanVien}</td>
-                <td>{nhanviens.TenChiNhanh}</td>
-                <td>{nhanviens.TenNhanVien}</td>
-                <td>{nhanviens.DiaChi}</td>
-                <td>
-                  <div className="d-flex">
-                    <Link
-                      className="btn btn-success"
-                      to={`/nhan-vien/${nhanviens.MaNhanVien}`}
-                    >
-                      Sửa
-                    </Link>
-                    <button
-                      className="btn btn-danger delete_data"
-                      onClick={() => showModal(nhanviens.MaNhanVien)}
-                    >
-                      Xóa
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {Array.isArray(nhanvien) &&
+              nhanvien?.map((nhanviens) => (
+                <tr key={nhanviens.MaNhanVien}>
+                  <td>{nhanviens.MaNhanVien}</td>
+                  <td>{nhanviens.TenChiNhanh}</td>
+                  <td>{nhanviens.TenNhanVien}</td>
+                  <td>{nhanviens.DiaChi}</td>
+                  <td>
+                    <div className="d-flex">
+                      <Link
+                        className="btn btn-success"
+                        to={`/nhan-vien/${nhanviens.MaNhanVien}`}
+                      >
+                        Sửa
+                      </Link>
+                      <button
+                        className="btn btn-danger delete_data"
+                        onClick={() => showModal(nhanviens.MaNhanVien)}
+                      >
+                        Xóa
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

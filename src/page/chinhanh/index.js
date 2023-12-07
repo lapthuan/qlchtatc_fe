@@ -63,30 +63,31 @@ const ChiNhanh = () => {
             </tr>
           </thead>
           <tbody>
-            {chinhanh?.map((chinhanhs) => (
-              <tr key={chinhanhs.MaChiNhanh}>
-                <td>{chinhanhs.MaChiNhanh}</td>
-                <td>{chinhanhs.TenChiNhanh}</td>
-                <td>{chinhanhs.TenTinh}</td>
+            {Array.isArray(chinhanh) &&
+              chinhanh?.map((chinhanhs) => (
+                <tr key={chinhanhs.MaChiNhanh}>
+                  <td>{chinhanhs.MaChiNhanh}</td>
+                  <td>{chinhanhs.TenChiNhanh}</td>
+                  <td>{chinhanhs.TenTinh}</td>
 
-                <td>
-                  <div className="d-flex">
-                    <Link
-                      className="btn btn-success"
-                      to={`/chi-nhanh/${chinhanhs.MaChiNhanh}`}
-                    >
-                      Sửa
-                    </Link>
-                    <button
-                      className="btn btn-danger delete_data"
-                      onClick={() => showModal(chinhanhs.MaChiNhanh)}
-                    >
-                      Xóa
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                  <td>
+                    <div className="d-flex">
+                      <Link
+                        className="btn btn-success"
+                        to={`/chi-nhanh/${chinhanhs.MaChiNhanh}`}
+                      >
+                        Sửa
+                      </Link>
+                      <button
+                        className="btn btn-danger delete_data"
+                        onClick={() => showModal(chinhanhs.MaChiNhanh)}
+                      >
+                        Xóa
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

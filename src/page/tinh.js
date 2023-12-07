@@ -11,11 +11,12 @@ const Tinh = () => {
       <div style={{ display: "flex" }}>
         <h4>Đang thực hiện quản lý thông tin dữ liệu của tỉnh: </h4>
         {"	"}
-        {tinh?.map((item) => (
-          <h3 key={item.id} style={{ color: "red" }}>
-            {item.TenTinh}
-          </h3>
-        ))}
+        {Array.isArray(tinh) &&
+          tinh?.map((item) => (
+            <h3 key={item.id} style={{ color: "red" }}>
+              {item.TenTinh}
+            </h3>
+          ))}
       </div>
     </>
   );
