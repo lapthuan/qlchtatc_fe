@@ -12,14 +12,14 @@ const DangNhap = () => {
           <input
             type="text"
             id="login"
-            class="fadeIn second"
+            class="fadeIn second myInput"
             placeholder="Nhập tài khoản"
           />
 
           <input
             type="text"
             id="password"
-            class="fadeIn third"
+            class="fadeIn third myInput"
             placeholder="Nhập mật khẩu"
           />
           <button className="btn btn-primary w-50 m-3 "> Đăng nhập</button>
