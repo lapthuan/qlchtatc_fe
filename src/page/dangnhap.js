@@ -18,9 +18,9 @@ const DangNhap = () => {
     };
     const res = await ServiceEmployee.loginEmployee(body);
     if (res.message == "Sai tên tài khoản hoặc mật khẩu") {
+      navigate("/dang-nhap");
       message.warning(res.message);
-    }
-    if (res) {
+    } else {
       cookie.set("userinfo", res);
       navigate("/");
     }
