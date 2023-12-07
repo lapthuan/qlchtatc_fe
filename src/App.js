@@ -31,10 +31,12 @@ import ChiTietDatails from "./page/phieunhap/chiTietDetails";
 import ActionChiTietDetails from "./page/phieunhap/actionChiTietDetails";
 import HoaDonDeTail from "./page/hoadon/hoaDonDetails";
 import ActionHoaDonDetail from "./page/hoadon/actionDetails";
+import DangNhap from "./page/dangnhap";
 
 function App() {
   return (
     <Routes>
+      <Route path="/dang-nhap" element={<DangNhap />} />
       <Route path="/" element={<Layout />}>
         <Route index element={<TrangChu />} />
         <Route path="/trang-chu" element={<TrangChu />} />
