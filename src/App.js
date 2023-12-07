@@ -32,6 +32,7 @@ import ActionChiTietDetails from "./page/phieunhap/actionChiTietDetails";
 import HoaDonDeTail from "./page/hoadon/hoaDonDetails";
 import ActionHoaDonDetail from "./page/hoadon/actionDetails";
 import DangNhap from "./page/dangnhap";
+import PhanTan from "./page/phanTan";
 
 function App() {
   return (
@@ -39,7 +40,7 @@ function App() {
       <Route path="/dang-nhap" element={<DangNhap />} />
       <Route path="/" element={<Layout />}>
         <Route index element={<SanPham />} />
-      
+
         <Route path="/chi-nhanh" element={<ChiNhanh />} />
         <Route path="/chi-nhanh/:id" element={<ChiTietChiNhanh />} />
 
@@ -84,6 +85,7 @@ function App() {
         <Route path="/thuong-hieu/:id" element={<ChiTietThuongHieu />} />
 
         <Route path="/tinh" element={<Tinh />} />
+        <Route path="/phan-tan" element={<PhanTan />} />
       </Route>
     </Routes>
   );
