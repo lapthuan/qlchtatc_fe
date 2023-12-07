@@ -16,12 +16,7 @@ const Sidebar = () => {
 				</div>
 			</div>
 			<ul className="list-sidebar bg-defoult">
-				<li>
-					<Link to="/trang-chu">
-						<i className="fa fa-diamond"></i>
-						<span className="nav-label">Trang chủ</span>
-					</Link>
-				</li>
+
 				<li>
 					<a
 						href='#'

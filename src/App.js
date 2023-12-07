@@ -38,8 +38,8 @@ function App() {
     <Routes>
       <Route path="/dang-nhap" element={<DangNhap />} />
       <Route path="/" element={<Layout />}>
-        <Route index element={<TrangChu />} />
-        <Route path="/trang-chu" element={<TrangChu />} />
+        <Route index element={<SanPham />} />
+      
         <Route path="/chi-nhanh" element={<ChiNhanh />} />
         <Route path="/chi-nhanh/:id" element={<ChiTietChiNhanh />} />
 
