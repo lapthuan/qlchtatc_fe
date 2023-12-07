@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Layout from './component/layout';
 import ChiNhanh from './page/chinhanh';
+import DangNhap from './page/dangnhap';
 import DanhMuc from './page/danhmuc';
 import HoaDon from './page/hoadon';
 import KhachHang from './page/khachhang';
@@ -22,7 +23,7 @@ function App() {
   return (
     <Routes>
 
-
+      <Route path="/dang-nhap" element={<DangNhap />} />
       <Route path="/" element={<Layout />}>
         <Route index element={(<TrangChu />)} />
         <Route path="/trang-chu" element={<TrangChu />} />
@@ -32,7 +33,7 @@ function App() {
         <Route path="/khach-hang" element={<KhachHang />} />
         <Route path="/kho" element={<Kho />} />
         <Route path="/loai-khach-hang" element={<LoaiKhachHang />} />
-        
+
         <Route path="/san-pham" element={<SanPham />} />
         <Route path="/san-pham/:id" element={<SanPhamChiTiet />} />
 
